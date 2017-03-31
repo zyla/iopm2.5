@@ -1,0 +1,2 @@
+#!/bin/bash
+exec python2 `dirname $0`/../tools/esptool/esptool.py "$@"
