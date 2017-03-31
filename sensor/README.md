@@ -97,3 +97,12 @@ firmware and Lua shell uses this serial line, so no other cables are needed.
 [nodemcu]: https://nodemcu.readthedocs.io/en/master/
 [ppd42ns]: http://web.archive.org/web/20140911065722/http://www.sca-shinyei.com/pdf/PPD42NS.pdf 
 [field-calibrations]: http://www.kirkrsmith.org/publications/2014/04/30/field-calibrations-of-a-low-cost-aerosol-sensor-at-a-regulatory-monitoring-site-in-california
+
+## External files used
+
+- `../tools/luatool` from <https://github.com/4refr0nt/luatool>
+- `../tools/esptool` from <https://github.com/espressif/esptool>
+- `nodemcu_float_master_20170329-1935.bin` built from
+  <https://github.com/nodemcu/nodemcu-firmware> using
+  [marcelstoer/nodemcu-build](https://hub.docker.com/r/marcelstoer/nodemcu-build/)
+  Docker image
