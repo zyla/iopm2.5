@@ -43,7 +43,9 @@ firmware and Lua shell uses this serial line, so no other cables are needed.
 
 3. Flash the firmware
 
+    ```
     ./esptool write_flash 0 nodemcu_float_master_20170329-1935.bin
+    ```
 
 4. Verify that it works
 
