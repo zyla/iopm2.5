@@ -57,11 +57,7 @@ firmware and Lua shell uses this serial line, so no other cables are needed.
 
     ```
     NodeMCU 2.0.0 build unspecified powered by Lua 5.1.4 on SDK 2.0.0(656edbf)
-    init.lua ver 1.2
-    set mode=STATION (mode=1)
-    MAC:    a0:20:a6:06:87:16
-    chip:   427798
-    heap:   40064
+    lua: cannot open init.lua
     > 
     ```
 
@@ -73,6 +69,31 @@ firmware and Lua shell uses this serial line, so no other cables are needed.
     ```
 
     Close the screen session (`C-a k`) so that it doesn't interfere with `luatool`.
+
+5. Upload **init.lua**
+
+    Before uploading `init.lua` you need to set WIFI credentials.
+    Locate line containing `wifi.sta.config("XXX","XXXXXXXXX")` and fill it
+    with your SSID and password.
+
+
+    Now you can upload the file:
+
+    ```
+    ./luatool --verbose --baud 115200 --echo -f init.lua
+    ```
+
+    Then when you connect with `screen` and press RESET you should see:
+
+    ```
+    NodeMCU 2.0.0 build unspecified powered by Lua 5.1.4 on SDK 2.0.0(656edbf)
+    init.lua ver 1.2
+    set mode=STATION (mode=1)
+    MAC:    a0:20:a6:06:87:16
+    chip:   427798
+    heap:   40064
+    > 
+    ```
 
 6. Upload and run the program
 
