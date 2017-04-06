@@ -95,6 +95,12 @@ firmware and Lua shell uses this serial line, so no other cables are needed.
     > 
     ```
 
+    **Note**: For development it's probably better _not_ to have `init.lua`. Reasons:
+    
+    1. Any errors in `init.lua` make the device go into a reboot loop (if this happens, reflash the firmware).
+    2. Output from your program interferes with `luatool` (which uses the same serial channel). If this happens,
+       type `file.remove("main.lua")` into the serial console. 
+
 6. Upload and run the program
 
     ```
