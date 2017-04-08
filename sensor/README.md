@@ -33,6 +33,8 @@ firmware and Lua shell uses this serial line, so no other cables are needed.
     crw-rw---- 1 root uucp 188, 0 Mar 31 11:29 /dev/ttyUSB0
     ```
 
+    **Note**: `ch341` driver is required. `USB_SERIAL_CH341` linux kernel config value must be set to `y`.
+
 2. Give yourself permissions
 
     Quick'n'dirty way:
@@ -40,6 +42,14 @@ firmware and Lua shell uses this serial line, so no other cables are needed.
     ```
     sudo chmod a+rw /dev/ttyUSB0
     ```
+
+    Good way:
+
+    ```
+    sudo gpasswd -a $USER dialout
+    ```
+
+    **Note**: You must log in again for changes to take effect.
 
 3. Flash the firmware
 
