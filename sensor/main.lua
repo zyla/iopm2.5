@@ -62,6 +62,11 @@ do
   end)
 
   tmr.alarm(2, sample_time_ms, tmr.ALARM_AUTO, function()
+      if time0 <= 0 or time1 <= 0 then
+          print("One of the time values is negative!")
+          time0, time1 = 0, 0
+          return
+      end
       high, low = time1, time0
       ratio = low / (high + low)
       print(low, ' ', high, ' ',  ratio)
