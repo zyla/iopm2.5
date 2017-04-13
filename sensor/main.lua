@@ -11,7 +11,7 @@ local high, low, ratio = 0, 0, 0
 local sv = net.createServer(net.TCP, 30)
 
 function receiver(sck, data)
-  str = string.format("# HELP iopm25 Measurement of particle density\n# TYPE iopm25 gauge\niopm25{type=\"high\"} %d\niopm25{type=\"low\"} %d\niopm25{type=\"ratio\"} %f\n", high, low, low/(high+low))
+  local str = string.format("# HELP iopm25 Measurement of particle density\n# TYPE iopm25 gauge\niopm25{type=\"high\"} %d\niopm25{type=\"low\"} %d\niopm25{type=\"ratio\"} %f\n", high, low, low/(high+low))
 
   local response = {}
   response[#response + 1] = "HTTP/1.1 200 OK\r\n"
@@ -50,7 +50,7 @@ do
 
   gpio.trig(pin, "both", function(level, when)
     if not (level == last_level) then
-      diff = when - last_int
+      local diff = when - last_int
       if last_level == gpio.HIGH then
           time1 = time1 + diff
       else
