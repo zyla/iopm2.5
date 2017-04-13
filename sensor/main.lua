@@ -7,6 +7,9 @@ tmr.alarm(0, 1000, 1, function()
    end
 end)
 
+local conn = net.createConnection(net.TCP, 0)
+conn:connect(5050, "XXXXXXXXX")
+
 do
   local pin = 3
   local sample_time_ms = 30000
@@ -32,6 +35,8 @@ do
 
   tmr.alarm(2, sample_time_ms, tmr.ALARM_AUTO, function()
       print(time0, ' ', time1, ' ', time0 / (time0 + time1))
+      local str = string.format("%s,%s\n", time0, time1)
+      conn:send(str)
       time0, time1 = 0, 0
   end)
 end
