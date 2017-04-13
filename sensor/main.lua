@@ -7,8 +7,36 @@ tmr.alarm(0, 1000, 1, function()
    end
 end)
 
-local conn = net.createConnection(net.TCP, 0)
-conn:connect(5050, "XXXXXXXXX")
+local high, low, ratio = 0, 0, 0
+local sv = net.createServer(net.TCP, 30)
+
+function receiver(sck, data)
+  str = string.format("# HELP iopm25 Measurement of particle density\n# TYPE iopm25 gauge\niopm25{type=\"high\"} %d\niopm25{type=\"low\"} %d\niopm25{type=\"ratio\"} %f\n", high, low, low/(high+low))
+
+  local response = {}
+  response[#response + 1] = "HTTP/1.1 200 OK\r\n"
+  response[#response + 1] = string.format("Content-Length: %s\r\n", string.len(str))
+  response[#response + 1] = "Content-Type: text/plain; version=0.0.4\r\n\r\n"
+  response[#response + 1] = str
+
+  local function send(localSocket)
+    if #response > 0 then
+      localSocket:send(table.remove(response, 1))
+    else
+      localSocket:close()
+      response = nil
+    end
+  end
+
+  sck:on("sent", send)
+  send(sck)
+end
+
+if sv then
+  sv:listen(80, function(conn)
+    conn:on("receive", receiver)
+  end)
+end
 
 do
   local pin = 3
@@ -34,9 +62,9 @@ do
   end)
 
   tmr.alarm(2, sample_time_ms, tmr.ALARM_AUTO, function()
-      print(time0, ' ', time1, ' ', time0 / (time0 + time1))
-      local str = string.format("%s,%s\n", time0, time1)
-      conn:send(str)
+      high, low = time1, time0
+      ratio = low / (high + low)
+      print(low, ' ', high, ' ',  ratio)
       time0, time1 = 0, 0
   end)
 end
